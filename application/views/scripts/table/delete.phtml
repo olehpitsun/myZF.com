@@ -1,0 +1,18 @@
+<?php 
+$this->title = "Delete data";
+$this->headTitle($this->title);
+?>
+<center>
+<h3>Бажаєте видалити запис 
+  '<?php echo $this->escape($this->data['username']); ?>'?
+</h3>
+
+<form action="<?php echo $this->url(array('action'=>'delete')); ?>" method="post">
+<div>
+  <input type="hidden" name="id" value="<?php echo $this->data['id']; ?>" />
+  <input type="submit" class="btn btn-primary" name="del" value="Yes" />
+  <input type="submit" class="btn btn-warning" name="del" value="No" />
+</div>
+</form>
+
+</center>

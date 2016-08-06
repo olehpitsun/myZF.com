@@ -1,0 +1,81 @@
+<?php
+$this->title = "My pages";
+$this->headTitle($this->title);
+?>
+<script type="text/javascript" src="/js/main.js"></script>
+<link href="/js/Sortable/app.css" rel="stylesheet" type="text/css">
+    <!-- Connected lists -->
+    <div class="container-fluid">
+        <div class="row"></br>
+            <h2 style="text-align: center">Менеджер публікацій</h2></br></br>
+            <div class="col-lg-4  col-md-4 ">
+                <form id="search" method="post">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="textSearch" id="textSearch"
+                               placeholder="Пошук" />
+                            <span class="input-group-btn">
+                                <button style="background-color: #607d8b; border-color: #607d8b" class="btn btn-primary" onclick="search()" type="button"
+                                        id="searchButton">Шукати</button>
+                            </span>
+                    </div>
+                </form>
+            </div></br></br></br></br>
+            <div class="col-md-6 col-lg-6 col-xs-6 col-md-6 ">
+                <div data-force="30" class="layer block" style="left: 10%; top: 0; width: 100%; ">
+                    <div class="layer title">Список публікацій</div>
+                    <ul id="foo" class="block__list block__list_words">
+                    <?php
+                    if (count($this->publicationsList)) {
+                        foreach ($this->publicationsList as $item) { ?>
+                        <li>
+                            <input type="hidden" id="<?php print $item['id']; ?>"
+                            value="<?php print $item['id']; ?>"/>
+                            <?= $item['title'] . " " . $item['id']; ?>
+                        </li>
+                            <?php
+                        }
+                    }
+                    ?>
+                    </ul>
+                    <input type="submit" onclick="loadPublications()" class="btn btn-default btn-sm" value="Показати ще" />
+                </div>
+            </div>
+
+            <form id="favoriteForm" onsubmit="selectInputs();return false;" name="favoriteForm" method="post" class="form-horizontal">
+                <div class="col-md-6 col-lg-6 col-xs-6 col-md-6">
+
+                    <div data-force="18" class="layer block" style="left: 10%; top: 0px; width: 100%;">
+                        <div class="layer title">Мої улюблені</div></br><h6>перетягніть сюди</h6>
+                        <ul id="bar" class="block__list block__list_tags">
+                            <?php
+                            if (count($this->favoriteList)) {
+                                foreach ($this->favoriteList as $item) { ?>
+                                <li>
+                                    <input type="hidden" id="<?php print $item['id']; ?>"
+                                    value="<?php print $item['id']; ?>"/>
+                                    <?= $item['title'] . " " . $item['id']; ?>
+                                </li>
+                                <?php
+                                 }
+                            }
+                            ?>
+                        </ul></br>
+                        <input type="submit" class="btn btn-success btn-sm" value="Зберегти зміни" />
+                        <span id="saveChangeStatus"></span>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/Sortable/Sortable.js"></script>
+    <script src="/js/Sortable/Ply.js"></script>
+    <script src="/js/Sortable/angular.js"></script>
+    <script src="/js/Sortable/ng-sortable.js"></script>
+    <script src="/js/Sortable/app.js"></script>
+    <script src="/js/Sortable/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+

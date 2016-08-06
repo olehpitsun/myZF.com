@@ -1,0 +1,67 @@
+<?php 
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('Zend Framework Tutorial');
+
+echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head>
+    <?php error_reporting(E_ALL);
+    ini_set("display_errors", 0);  ?>
+    <?php echo $this->headMeta(); ?> 
+    <?php echo $this->headTitle(); ?>
+    <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/vendor/themes/Yeti/bootstrap.css'); ?>
+    <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/vendor/themes/Yeti/custom.css'); ?>
+    <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/vendor/bootstrap/css/bootstrap.css'); ?>
+
+    <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/css/validationEngine.jquery.css'); ?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl().'/vendor/themes/Yeti/bootstrap.js');?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl().'/vendor/themes/Yeti/custom.js');?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl().'/js/jquery.js');?>
+    <?php echo $this->headScript()->appendFile($this->baseUrl().'/js/jquery.validationEngine.js');?>
+
+    <script type="text/javascript">/* <![CDATA[ */(function(d,s,a,i,j,r,l,m,t){try{l=d.getElementsByTagName('a');t=d.createElement('textarea');for(i=0;l.length-i;i++){try{a=l[i].href;s=a.indexOf('/cdn-cgi/l/email-protection');m=a.length;if(a&&s>-1&&m>28){j=28+s;s='';if(j<m){r='0x'+a.substr(j,2)|0;for(j+=2;j<m&&a.charAt(j)!='X';j+=2)s+='%'+('0'+('0x'+a.substr(j,2)^r).toString(16)).slice(-2);j++;s=decodeURIComponent(s)+a.substr(j,m-j)}t.innerHTML=s.replace(/</g,'&lt;').replace(/>/g,'&gt;');l[i].href='mailto:'+t.value}}catch(e){}}}catch(e){}})(document);/* ]]> */</script>
+
+</head>
+    <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<?= $this->baseUrl; ?>/index/index">Головна</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="<?= $this->baseUrl; ?>/publication/index">Менеджер публікацій <span class="sr-only"></span></a></li>
+                <li class="active"><a href="<?= $this->baseUrl; ?>/table/index">Таблиця <span class="sr-only">(current)</span></a></li>
+            </ul>
+            <?php
+            $auth = Zend_Auth::getInstance();
+            $acl = Zend_Registry::get('acl');
+            $role = $auth->getIdentity()->role;
+            if( $role != 'admin') { ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?= $this->baseUrl; ?>/auth/login">Увійти <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            <?php
+            }else { ?>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?= $this->baseUrl; ?>/auth/logout">Вийти <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            <?php } ?>
+        </div>
+    </nav>
+
+    <div id="content">
+        <?php echo $this->layout()->content; ?>
+    </div>
+
+    </body>
+</html>

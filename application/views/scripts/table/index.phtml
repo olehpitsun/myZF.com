@@ -1,0 +1,81 @@
+<?php
+$this->title = "Перегляд гостової книги";
+$this->headTitle($this->title);
+?>
+<div class="container-fluid">
+    <div class="row">
+        <h2 style="text-align: center">Перегляд гостової книги</h2></br>
+        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1
+        col-sm-10 col-sm-offset-1">
+
+            <span  class="glyphicon glyphicon-collapse-down"></span>
+            - в алфавітному  порядку
+            <span  class="glyphicon glyphicon-collapse-up"></span>
+            - в зворотньому порядку
+
+            <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                    <tr class="caption">
+                        <th><a href="<?= $this->baseUrl; ?>/table/index/row/username/type/ASC">
+                                <span  class="glyphicon glyphicon-collapse-down"></span></a>
+                            <a href="<?= $this->baseUrl; ?>/table/index/row/username/type/DESC">
+                                <span  class="glyphicon glyphicon-collapse-up"></span></a>&nbsp;User_name
+                        </th>
+                        <th><a href="<?= $this->baseUrl; ?>/table/index/row/email/type/ASC">
+                                <span  class="glyphicon glyphicon-collapse-down"></span>
+                            </a>
+                            <a href="<?= $this->baseUrl; ?>/table/index/row/email/type/DESC">
+                                <span  class="glyphicon glyphicon-collapse-up"></span>
+                            </a>&nbsp;E-mail
+                        </th>
+                        <th>website</th>
+                        <th>text</th>
+                        <th>ip-address</th>
+                        <th>Browser</th>
+
+                        <?php
+                        $auth = Zend_Auth::getInstance();
+                        $acl = Zend_Registry::get('acl');
+                        $role = $auth->getIdentity()->role;
+                        if(isset($role) AND $role == 'admin')
+                        { ?>
+                            <th>Action</th>
+                        <?php
+                        } ?>
+                    </tr>
+                </thead>
+
+                <?php
+                if (count($this->paginator)) { ?>
+                    <?php foreach ($this->paginator as $item) {?>
+                        <tr>
+                            <td><?= $item['username']; ?></td>
+                            <td><?= $item['email']; ?></td>
+                            <td><?= $item['website']; ?></td>
+                            <td><?= $item['text']; ?></td>
+                            <td><?= $item['ip_address']; ?></td>
+                            <td><?= $item['browser_type']; ?></td>
+                            <?php
+                            $auth = Zend_Auth::getInstance();
+                            $acl = Zend_Registry::get('acl');
+                            $role = $auth->getIdentity()->role;
+                            if(isset($role) AND $role == 'admin')
+                            { ?>
+                            <td>
+                                <a href="<?= $this->baseUrl; ?>/table/edit/id/<?= $item['id'];?>">
+                                    <span  class="glyphicon glyphicon-edit"></span></a>
+                                <a href="<?= $this->baseUrl; ?>/table/delete/id/<?= $item['id'];?>">
+                                    <span  class="glyphicon glyphicon-remove"></span></a>
+                            </td>
+                            <?php } ?>
+                        </tr>
+                    <?php
+                    }
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?= $this->paginationControl($this->paginator); ?>

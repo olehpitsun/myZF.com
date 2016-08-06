@@ -1,0 +1,42 @@
+<?php
+ error_reporting(E_ALL);
+    ini_set("display_errors", 0);  ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="jumbotron">
+            <h1>Просто сайт</h1>
+            <p> Zend Framework, JavaScript, AJAX, Twitter Bootstrap, mySql ...</p>
+            <p><a href="#guestform" class="btn btn-primary btn-lg">Гостьова книга</a></p>
+        </div>
+        <?php
+        $auth = Zend_Auth::getInstance();
+        $acl = Zend_Registry::get('acl');
+        $role = $auth->getIdentity()->role;
+        if( $role != 'admin') { ?>
+        <section id="guestform">
+            <div class="col-xs-6 col-xs-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+                <?php
+                     echo $this->form;
+                ?>
+            </div>
+        </section>
+        <?php
+        }else   { ?>
+        <section id="showWelcomeMessage">
+            <div class="col-xs-6 col-xs-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+                <h2>Вітаю, Ви увійшли як <?php print $role;?> </h2></br>
+                <div class="col-xs-6 col-sm-6 col-md-12 col-lg-6">
+                    <a href="<?= $this->baseUrl; ?>/table/index" class="btn btn-primary btn-lg">
+                        Гостьова книга (перегляд)
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <a href="<?= $this->baseUrl; ?>/publication/index" class="btn btn-primary btn-lg">
+                        Менеджер публікацій
+                    </a>
+                </div>
+            </div>
+        </section>
+        <?php }?>
+    </div>
+</div>
